@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const app = require('./app')
+require("dotenv").config();
+
 const url = `https://weciimaa.online/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%81%d9%8a%d9%84%d9%85-earth-and-blood-2020-%d9%85%d8%aa%d8%b1%d8%ac%d9%85/`
 // const test = async (title) => {
 // 	// Launch the browser and open a new blank page
@@ -51,6 +53,18 @@ const url = `https://weciimaa.online/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-
 const init = async()=>{
 	try {
 		const browser = await puppeteer.launch(
+			{
+				args: [
+				  "--disable-setuid-sandbox",
+				  "--no-sandbox",
+				  "--single-process",
+				  "--no-zygote",
+				],
+				executablePath:
+				  process.env.NODE_ENV === "production"
+					? process.env.PUPPETEER_EXECUTABLE_PATH
+					: puppeteer.executablePath(),
+			  }
 		// 	{
 		// 	executablePath: `C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`,
 		//   }
