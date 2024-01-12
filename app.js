@@ -1,5 +1,5 @@
 const express = require('express')
-// const cors = require('cors')
+const cors = require('cors')
 
 const appExpress = express();
 require("dotenv").config();
@@ -36,7 +36,7 @@ const generate = async(browser,page,title,year)=>{
 const app = (browser,page)=>{
     appExpress.use(express.json());
 appExpress.use(express.urlencoded({ extended: false }))
-// appExpress.use(cors());
+appExpress.use(cors());
     appExpress.post('/get-links',async(req,res)=>{
         const {name,year} = req.body
         const correctName = name.replace(/[^a-zA-Z0-9: ]/g, "").split(' ').join('-')
