@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const generate = async(browser,page,title,year)=>{
     // Navigate the page to a URL
-	await page.goto(`https://weciimaa.online/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%81%d9%8a%d9%84%d9%85-${title}-${year}-%d9%85%d8%aa%d8%b1%d8%ac%d9%85/`);
+	await page.goto(`https://xn------nzebca5gd7ode0biglh.myciima-weciima.shop/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%81%d9%8a%d9%84%d9%85-${title}-${year}-%d9%85%d8%aa%d8%b1%d8%ac%d9%85/`);
    
 	// // Set screen size
 	// await page.setViewport({width: 1080, height: 1024});
