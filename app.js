@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const generate = async(browser,page,title,year)=>{
     // Navigate the page to a URL
-	await page.goto(`https://t4cce4ma.shop/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%81%d9%8a%d9%84%d9%85-${title}-${year}-%d9%85%d8%aa%d8%b1%d8%ac%d9%85/`);
+	await page.goto(`https://t4cce4ma.shop/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%81%d9%8a%d9%84%d9%85-${title.toLowerCase()}-${year}-%d9%85%d8%aa%d8%b1%d8%ac%d9%85/`);
    
 	// // Set screen size
 	// await page.setViewport({width: 1080, height: 1024});
@@ -34,7 +34,7 @@ const generate = async(browser,page,title,year)=>{
 	return dt
 }
 const generateTv = async(browser,page,title,epsoide,season)=>{
-	await page.goto(`https://t4cce4ma.shop/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%85%d8%b3%d9%84%d8%b3%d9%84-${title}-%d9%85%d9%88%d8%b3%d9%85-${season}-%d8%ad%d9%84%d9%82%d8%a9-${epsoide}/`);
+	await page.goto(`https://t4cce4ma.shop/watch/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%85%d8%b3%d9%84%d8%b3%d9%84-${title.toLowerCase()}-%d9%85%d9%88%d8%b3%d9%85-${season}-%d8%ad%d9%84%d9%82%d8%a9-${epsoide}/`);
 	const searchResultSelector = '.List--Download--Wecima--Single a';
 	
 	const textSelector = await page.$$(searchResultSelector);
