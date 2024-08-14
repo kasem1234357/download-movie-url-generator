@@ -64,6 +64,7 @@ const init = async()=>{
 				  process.env.NODE_ENV === "production"
 					? process.env.PUPPETEER_EXECUTABLE_PATH
 					: puppeteer.executablePath(),
+				headless:"new"
 			  }
 		// 	{
 		// 	executablePath: `C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`,
