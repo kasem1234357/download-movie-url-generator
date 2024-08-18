@@ -1,4 +1,21 @@
-const puppeteer = require('puppeteer');
+let chrome = {};
+let options = {};
+let puppeteer;
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  chrome = require("chrome-aws-lambda");
+  puppeteer = require("puppeteer-core");
+} else {
+  puppeteer = require("puppeteer");
+}
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+    options = {
+      args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: await chrome.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    };
+  }
 const app = require('./app');
 const { config } = require('./config');
 require("dotenv").config();
@@ -10,19 +27,7 @@ process.on('uncaughtException', (err) => {
  })
 const init = async()=>{
 	try {
-		const browser = await puppeteer.launch(
-			{
-    args:[
-        "--disable-setuid-sandbox",
-				  "--no-sandbox",
-				  "--single-process",
-				  "--no-zygote",
-      ],
-      headless: "new",
-      ignoreHTTPSErrors: true,
-      
-}
-		  );
+		const browser = await puppeteer.launch(options);
 	const page = await browser.newPage();
      app(browser,page)	;
 	} catch (error) {
