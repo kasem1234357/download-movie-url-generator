@@ -11,7 +11,14 @@ process.on('uncaughtException', (err) => {
 const init = async()=>{
 	try {
 		const browser = await puppeteer.launch(
-			config
+			{
+    args:[
+        '--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'
+      ],
+      executablePath:process.env.NODE_ENV === "production"?process.env.PUPPETEER_EXECUTABLE_PATH:puppeteer.executablePath(),
+      headless:"new",
+      
+}
 		  );
 	const page = await browser.newPage();
      app(browser,page)	;
