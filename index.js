@@ -21,7 +21,9 @@ const init = async()=>{
     executablePath:
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath()});
+        : puppeteer.executablePath(),
+	headless:"new",			
+							});
 	const page = await browser.newPage();
      app(browser,page)	;
 	} catch (error) {
