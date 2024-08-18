@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const app = require('./app');
 const { config } = require('./config');
 require("dotenv").config();
+
 process.on('uncaughtException', (err) => {
     console.log(err.name, err.message);
     console.log('Uncaught Exception occured! Shutting down...');
@@ -10,22 +11,7 @@ process.on('uncaughtException', (err) => {
 const init = async()=>{
 	try {
 		const browser = await puppeteer.launch(
-			{
-				args: [
-				  "--disable-setuid-sandbox",
-				  "--no-sandbox",
-				  "--single-process",
-				  "--no-zygote",
-				],
-				executablePath:
-				  process.env.NODE_ENV === "production"
-					? process.env.PUPPETEER_EXECUTABLE_PATH
-					: puppeteer.executablePath(),
-				headless:"new"
-			  }
-		// 	{
-		// 	executablePath: `C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`,
-		//   }
+			config
 		  );
 	const page = await browser.newPage();
      app(browser,page)	;
