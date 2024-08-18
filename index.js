@@ -1,24 +1,8 @@
-let chrome = {};
-let options = {};
-let puppeteer;
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-  chrome = require("chrome-aws-lambda");
-  puppeteer = require("puppeteer-core");
-} else {
-  puppeteer = require("puppeteer");
-}
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-    options = {
-      args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
-      defaultViewport: chrome.defaultViewport,
-      executablePath: await chrome.executablePath,
-      headless: true,
-      ignoreHTTPSErrors: true,
-    };
-  }
-const app = require('./app');
-const { config } = require('./config');
+const puppeteer = require("puppeteer");
 require("dotenv").config();
+const app = require('./app');
+
+
 
 process.on('uncaughtException', (err) => {
     console.log(err.name, err.message);
@@ -27,7 +11,16 @@ process.on('uncaughtException', (err) => {
  })
 const init = async()=>{
 	try {
-		const browser = await puppeteer.launch(options);
+		const browser = await puppeteer.launch( {args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath()});
 	const page = await browser.newPage();
      app(browser,page)	;
 	} catch (error) {
