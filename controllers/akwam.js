@@ -33,7 +33,6 @@ const generateFunc= async(browser,page,title)=>{
         // Wait for the first selector to appear before clicking
 		
 		const test = await page.$eval('.entry-box .entry-image a', element => element.href);
-		console.log(test)
 		await page.setRequestInterception(true);
     page.on("request", (req) => {
 		const requestUrl = req.url();
