@@ -1,11 +1,17 @@
 require("dotenv").config();
+const puppeteer = require("puppeteer");
 
 const config = {
     args:[
-        '--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'
+         "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
       ],
-      executablePath:process.env.PUPPETEER_EXECUTABLE_PATH,
-      headless:"new",
+      executablePath:process.env.NODE_ENV === "production"
+					? process.env.PUPPETEER_EXECUTABLE_PATH
+					: puppeteer.executablePath(),
+      
       
 }
 module.exports = {config}
