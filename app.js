@@ -23,7 +23,7 @@ const corsOptions = require('./config/corsConfig')
 //=============== app logic ======================//
 const appExpress = express();
 require("dotenv").config();
-
+const PORT = process.env.PORT || 4000;
 const app = (browser,page)=>{
     appExpress.use(express.json());
 appExpress.use(express.urlencoded({ extended: false }))
@@ -37,7 +37,7 @@ appExpress.use('/server1',serverRoute1)
 appExpress.use('/server2',serverRoute2)
 appExpress.use('/server3',serverRoute3)
 
-   appExpress.listen(8800, '0.0.0.0', () => {
+   appExpress.listen(PORT, () => {
     console.log("Backend server is running!");
    });
    //==============//
