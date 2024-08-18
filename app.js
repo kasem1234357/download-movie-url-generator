@@ -37,7 +37,7 @@ appExpress.use('/server1',serverRoute1)
 appExpress.use('/server2',serverRoute2)
 appExpress.use('/server3',serverRoute3)
 
-   appExpress.listen(8800, () => {
+   appExpress.listen(8800, '0.0.0.0', () => {
     console.log("Backend server is running!");
    });
    //==============//
