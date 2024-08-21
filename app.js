@@ -2,7 +2,8 @@
 //==========core packeges ============================//
 const express = require('express')
 const cors = require('cors')
-
+const cron = require('node-cron');
+const axios = require('axios');
 //====================================================//
 //=========== Routes =================================//
 const serverRoute1 = require('./routes/akwam')
@@ -36,7 +37,17 @@ appExpress.use((req,res,next)=>{
 appExpress.use('/server1',serverRoute1)
 appExpress.use('/server2',serverRoute2)
 appExpress.use('/server3',serverRoute3)
-
+appExpress.get('/api/test',(req,res)=>{
+  res.status(200).json('server is active')
+})
+    cron.schedule('*/5 * * * *', async () => {
+  try {
+    const response = await axios.get('https://download-movie-url-generator.onrender.com/api/test');
+    console.log(`Health check response: ${response.status}`);
+  } catch (error) {
+    console.error(`Health check error: ${error.message}`);
+  }
+});
    appExpress.listen(PORT, () => {
     console.log("Backend server is running!");
    });
