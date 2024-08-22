@@ -38,7 +38,7 @@ const generateFunc= async(browser,page,title)=>{
 				const linkElement = entry.querySelector('a');  
 	
 				// Check if img exists and match with the title  
-				if (imgElement && linkElement && imgElement.alt.toLowerCase() === title) {  
+				if (imgElement && linkElement && imgElement.alt.toLowerCase() === title.toLowerCase()) {  
 					return linkElement.href; // Return the href if conditions are matched  
 				}  
 				
