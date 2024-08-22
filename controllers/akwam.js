@@ -258,7 +258,7 @@ const generateServer1 =asyncErrorHandler(async(req,res)=>{
     const {title} = req.query
     const {browser,page} = req
     try {
-        const data = await generateFunc(browser,page,title)
+        const data = await generateFunc(browser,page,title.replace(':',""))
         console.log(data)
         if(data){
 			
