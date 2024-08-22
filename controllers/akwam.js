@@ -32,7 +32,20 @@ const generateFunc= async(browser,page,title)=>{
 
         // Wait for the first selector to appear before clicking
 		
-		const test = await page.$eval('.entry-box .entry-image a', element => element.href);
+		const test = await page.$$eval('.entry-image', (entries, title) => {  
+			for (const entry of entries) {  
+				const imgElement = entry.querySelector('picture img');  
+				const linkElement = entry.querySelector('a');  
+	
+				// Check if img exists and match with the title  
+				if (imgElement && linkElement && imgElement.alt.toLowerCase() === title) {  
+					return linkElement.href; // Return the href if conditions are matched  
+				}  
+				
+			}  
+			 
+			return {}; // Return null if no match is found  
+		}, title); 
 		await page.setRequestInterception(true);
     page.on("request", (req) => {
 		const requestUrl = req.url();
