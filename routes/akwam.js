@@ -1,8 +1,8 @@
-const {  generateServer1,  getEpsoide  } = require('../controllers/akwam')
+const {  generateServer1,  getEpsoide,download  } = require('../controllers/akwam')
 
 const router = require('express').Router()
 
 router.get('/',generateServer1)
 router.get('/tv/',getEpsoide)
-router.get('/list',)
+router.get('/download',download)
 module.exports = router
