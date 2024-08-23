@@ -78,25 +78,8 @@ const generateFunc= async(browser,page,title)=>{
 	  })
 		
 	}
-		const finalResult =[]
-	for(let item of result){
-	   try {
-			   
-		   await page.goto(item.url);
-			// Wait until no more than 2 network connections are open
-		   
-		   const actualLink = await page.$eval('.btn-loader a', element => element.href);
-		   console.log(actualLink);
-		   finalResult.push({
-			   ...item,
-			   url: actualLink
-		   }) ;
-	   } catch (error) {
-		   console.error(`Error processing URL ${item.url}:`, error);
-	   }
-
-	}
-		return finalResult
+		
+		return result
     } catch (error) {
         console.error('Error:', error.message);
     } 
