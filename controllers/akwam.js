@@ -9,6 +9,42 @@ const blockResourceName = ['analytics',
   'video'];
 /*||
 */
+const finalLinkFunc =  async(browser,page,url)=>{
+
+	try {
+        // Block unnecessary resources
+        await page.setRequestInterception(true);
+    page.on("request", (req) => {
+		const requestUrl = req.url();
+		if (!req.isInterceptResolutionHandled())
+		  if (
+			blockResourceType.includes(req.resourceType()) ||
+			blockResourceName.some((resource) => requestUrl.includes(resource))
+		  ) {
+			req.abort();
+		  } else {
+			req.continue();
+		  }
+	  });
+        // Go to the search page with the movie name
+        await page.goto(`${url}`);
+
+        // Wait for the first selector to appear before clicking
+
+			// Wait until no more than 2 network connections are open
+		   
+		   const actualLink = await page.$eval('.btn-loader a', element => element.href);
+		   console.log(actualLink);
+
+	
+
+
+
+		return actualLink
+    } catch (error) {
+        console.error('Error:', error.message);
+    } 
+}
 const generateFunc= async(browser,page,title)=>{
 	try {
         // Block unnecessary resources
@@ -185,6 +221,22 @@ const generateTvFuncEpsoide = async(browser,page,title,season,epsoide)=>{
         console.error('Error:', error.message);
     } 
 }
+const download = asyncErrorHandler(async(req,res,next)=>{
+	try {
+		const {url}= req.query
+		const {browser,page} = req
+        const data = await finalLinkFunc(browser,page,url)
+        console.log(data)
+        if(data){
+			
+            res.status(200).json(data)
+        }else{
+            res.status(403).json({msg:'not found'})
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 const getListOfLinks = async(browser,page,pageNumber)=>{
 	await page.setRequestInterception(true);
     page.on("request", (req) => {
@@ -255,5 +307,6 @@ const generateServer1 =asyncErrorHandler(async(req,res)=>{
 })
 module.exports = {
     generateServer1,
-    getEpsoide
+    getEpsoide,
+	download
 }
