@@ -40,7 +40,7 @@ appExpress.use('/server3',serverRoute3)
 appExpress.get('/api/test',(req,res)=>{
   res.status(200).json('server is active')
 })
-    cron.schedule('*/5 * * * *', async () => {
+    cron.schedule('*/10 * * * *', async () => {
   try {
     const response = await axios.get('https://download-movie-url-generator.onrender.com/api/test');
     console.log(`Health check response: ${response.status}`);
